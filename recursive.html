@@ -1,0 +1,111 @@
+<html>  
+
+
+    <head>
+        <title>Recursive</title>
+        <style>
+            body{
+                margin:0;
+                padding:0;
+            }
+
+            #gauche{
+                width:40%;
+                float:left;
+                background-color:red;
+                margin:0;
+            }
+
+            #droite{
+                float:right;
+                background-color:green;
+                width:60%;
+                margin:0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="gauche">
+            <h1>Recursivity</h1>
+            Chrono: <span id="sec"></span>
+            <label for="nbr">Nombre a calculer</label>
+            <input type="number" id="nbr" placeholder="Nombre">
+            <button onclick="calculerNaive()">Calculer</button>:
+            <span id="rslt"></span>
+            <br>
+
+        </div>
+
+        <div id="droite">
+            <h1>Dynamique programming</h1>
+
+                Chrono: <span id="sec"></span>
+                <label for="nbr2">Nombre a calculer</label>
+                <input type="number" id="nbr2" placeholder="Nombre">
+                <button onclick="calculerDynamique()">Calculer</button>:
+                <span id="rslt2"></span>
+                <br>
+
+            
+        </div>
+
+    </body>
+
+    <script>
+
+
+
+
+/***************************RECURSIVE PART *****************************/
+
+        var appels=0;
+        function fubo(x){
+            appels++;
+            if(x==0 || x==1){
+                return x;
+            }else{
+                return fubo(x-1) + fubo(x-2);
+            }
+        }
+        function calculerNaive(){
+            var nbr = document.getElementById("nbr").value;
+            var rslt = fubo(nbr);
+            document.getElementById("rslt").innerHTML += `<hr> Le fibo de ` + nbr + ` est `+ rslt + ` dans ` +appels+ ` appels`+`<hr>`;
+            appels=0;
+        }
+
+
+
+
+/***************************Dynamique programmation PART *****************************/
+        var cache=new Map();
+        var appels2=0;
+
+        function fubo2(x){
+            appels2++;
+            console.log(cache.has(x));
+            if(cache.has(x)){
+                return cache.get(x);
+            }else{
+                console.log("ciiici");
+                if(x <= 2 ){
+                    return 1;
+                }else{
+                    res = fubo2(x-1) + fubo2(x-2);
+                    cache.set(x,res);
+                    return res;
+                }
+            }
+        }
+
+        function calculerDynamique(){
+            var nbr2 = document.getElementById("nbr2").value;
+            var rslt2 = fubo2(nbr2);
+            document.getElementById("rslt2").innerHTML += `<hr> Le fibo de ` + nbr2 + ` est `+ rslt2 + ` dans ` +appels2+ ` appels`+`<hr>`;
+            appels2=0;
+        }
+
+
+    </script>
+</html>
